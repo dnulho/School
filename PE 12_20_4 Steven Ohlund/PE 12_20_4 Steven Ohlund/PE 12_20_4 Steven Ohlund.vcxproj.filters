@@ -15,17 +15,12 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="PE-12_20_2.cpp">
+    <ClCompile Include="PE-12_20_4.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="quote.txt">
-      <Filter>Source Files</Filter>
-    </Text>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Psudocode.docx">
+    <None Include="Pseudocode.docx">
       <Filter>Source Files</Filter>
     </None>
   </ItemGroup>
