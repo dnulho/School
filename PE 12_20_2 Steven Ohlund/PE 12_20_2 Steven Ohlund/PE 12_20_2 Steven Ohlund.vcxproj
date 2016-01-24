@@ -144,6 +144,9 @@
   <ItemGroup>
     <ClCompile Include="PE-12_20_2.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="quote.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
