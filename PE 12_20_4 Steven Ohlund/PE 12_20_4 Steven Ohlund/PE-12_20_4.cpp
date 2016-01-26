@@ -182,7 +182,7 @@ void SearchIngredient(char ** ingList, int numIng)
 *
 * Precondition: All arguments must exist and be valid.
 *
-* Postcondition: returns the index of found, -1 if not.
+* Postcondition: returns the index if found, -1 if not.
 *
 ******************************************************/
 int FindIng(char ** ingList, int numIng, char * findIng)
@@ -191,25 +191,26 @@ int FindIng(char ** ingList, int numIng, char * findIng)
 
 	if (ingList != nullptr && numIng != 0)
 	{
-		int left = 0;
-		int right = numIng;
+		int low = 0;
+		int high = numIng;
+		int mid;
 
-		while (found == -1 && left < right)
+		while ((found == -1) && (low < high))
 		{
-			int center = (left + right) / 2;
-			int comp = _stricmp(ingList[center], findIng);
+			mid = (high + low) / 2;
+			int comp = _stricmp(ingList[mid], findIng);
 
 			if (comp == 0)
 			{
-				found = center;
+				found = mid;
 			}
 			else if (comp < 0)
 			{
-				left = center + 1;
+				low = (mid + 1);
 			}
 			else // (comp > 0)
 			{
-				right = center - 1;
+				high = (mid - 1);
 			}
 		}
 	}
@@ -235,11 +236,9 @@ bool AddIng(char **& ingList, int & numIng, char * nIng)
 	{
 		if (ingList != nullptr && numIng != 0)
 		{
-			sort = _stricmp(nIng, *(ingList + ii));
-			while (ii < numIng && sort > 0)
+			while (ii < numIng &&  _stricmp(nIng, ingList[ii]) > 0)
 			{
 				temp[ii] = ingList[ii];
-				sort = _stricmp(nIng, *(ingList + ii));
 				ii++;
 			}
 			temp[ii] = new char[strlen(nIng) + 1];
@@ -422,7 +421,10 @@ void AddIngredient(char **& ingList, int & numIng)
 
 	system("CLS");
 	cout << "What Ingredient would you like to add: ";
-	cin >> buffer;
+	cin.ignore(cin.rdbuf()->in_avail());
+	cin.getline(buffer, BUFFSIZE);
+	cin.clear();
+	cin.ignore(cin.rdbuf()->in_avail());
 	if (AddIng(ingList, numIng, buffer))
 	{
 		cout << buffer << " added\n";
@@ -442,7 +444,10 @@ void RemoveIngredient(char **& ingList, int & numIng)
 
 	system("CLS");
 	cout << "What Ingredient would you like to remove: ";
-	cin >> buffer;
+	cin.ignore(cin.rdbuf()->in_avail());
+	cin.getline(buffer, BUFFSIZE);
+	cin.clear();
+	cin.ignore(cin.rdbuf()->in_avail());
 	if (RemoveIng(ingList, numIng, buffer))
 	{
 		cout << buffer << " removed\n";
@@ -570,7 +575,7 @@ void OpenRecipeFile(char **& ingList, int & numIngs)
 
 			while (!fileIn.eof())
 			{
-				fileIn.getline(&current, 2);
+				fileIn >> current;
 				if ( current == '<')
 				{
 					write = true;
@@ -636,11 +641,12 @@ void FindMissing(char ** sourceList, int sourceNum, char ** searchList, int sear
 ******************************************************/
 void DisplayMissingList(char ** recList, int recNum, char ** panList, int panNum)
 {
-	char ** temp = nullptr;
+	char ** tempList = nullptr;
 	int tempNum = 0;
-	FindMissing(panList, panNum, recList, recNum, temp, tempNum);
-	DisplayList(temp, tempNum);
-	PurgeMem(temp, tempNum);
+
+	FindMissing(panList, panNum, recList, recNum, tempList, tempNum);
+	DisplayList(tempList, tempNum);
+	PurgeMem(tempList, tempNum);
 }
 
 /******************************************************
@@ -653,11 +659,11 @@ void DisplayMissingList(char ** recList, int recNum, char ** panList, int panNum
 void ShoppingList(char ** recList, int recNum, char ** panList, int panNum)
 {
 	const char filename[] = "shoppingList.txt";
-	char ** temp = nullptr;
+	char ** tempList = nullptr;
 	int tempNum = 0;
 
-	OpenFile(&temp, &tempNum, filename);
-	FindMissing(panList, panNum, recList, recNum, temp, tempNum);
-	SaveListToFile(temp, tempNum, filename);
-	PurgeMem(temp, tempNum);
+	OpenFile(&tempList, &tempNum, filename);
+	FindMissing(panList, panNum, recList, recNum, tempList, tempNum);
+	SaveListToFile(tempList, tempNum, filename);
+	PurgeMem(tempList, tempNum);
 }
