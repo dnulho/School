@@ -1,0 +1,9 @@
+1 cup <Flour>
+1/2 cup <Sugar>
+2 cups <Oatmeal>
+3/4 cup <Milk>
+
+1- Preheat oven
+2- Mix all ingredients together
+3- Cook
+4- Enjoy
