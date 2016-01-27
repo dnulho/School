@@ -1,0 +1,12 @@
+1 cup <Flour>
+1/2 cup <Sugar>
+2 cups <Oatmeal>
+3/4 cup <Milk>
+2 <Apples>
+
+1- Preheat oven
+2- Mix all ingredients together
+3- Cook
+4- Enjoy
+5- Add a bunch of random characters that are not ingredients to insure that the recipe parser correctly grabs the ingredients.
+6- Sprinkle <nutmeg> over the top.

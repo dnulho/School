@@ -28,5 +28,11 @@
     <Text Include="pantry.txt">
       <Filter>Source Files</Filter>
     </Text>
+    <Text Include="recipe.txt">
+      <Filter>Source Files</Filter>
+    </Text>
+    <Text Include="shoppingList.txt">
+      <Filter>Source Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>
