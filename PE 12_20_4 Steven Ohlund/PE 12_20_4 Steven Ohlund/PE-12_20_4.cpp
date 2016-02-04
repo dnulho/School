@@ -3,6 +3,12 @@
 * Filename: Source.cpp
 * Created: 1.20.16
 * Modified:
+*		1.23.16 - Worked on Ingredient functions
+*		1.25.16 - Fixed binary search function
+*				- Added Recipe functions
+*		1.26.16 - Tweaked and debugged code
+*		1.27.16 - Started documentation, continued deep debugging
+*		1.28.16 - Finished documentation, polished code
 ******************************************************/
 #define _CRTDBG_MAP_ALLOC
 #define _CRT_SECURE_NO_WARNINGS
@@ -25,7 +31,7 @@ int  Menu();
 void SearchIngredient(char ** ingList, int numIng);
 int  FindIng(char ** ingList, int numIng, char * findIng);
 bool AddIng(char **& ingList, int & numIng, char * nIng);
-bool RemoveIng(char **& ingList, int & numIng, char * dIng);
+bool RemoveIng(char **& ingList, int & numIng, int index);
 void EditIng(char **& ingList, int & numIng, int index, char * newIng);
 void SaveListToFile(char ** ingList, int numIng, const char * filename);
 void DisplayList(char ** ingList, int numIng);
@@ -34,18 +40,39 @@ void AddIngredient(char **& ingList, int & numIng);
 void RemoveIngredient(char **& ingList, int & numIng);
 void EditIngredient(char **& ingList, int & numIng);
 
-void Recipe(char ** panList, int panNum);
+void RecipeMenuSelect(char ** panList, int panNum);
 int  RecipeMenu();
 void OpenRecipeFile(char **& ingList, int & numIngs);
-void FindMissing(char ** sourceList, int sourceNum, char ** searchList, int searchNum, char **& newList, int & newNum);
+void FindMissing(char ** sourceList, int sourceNum, char ** searchList,
+					int searchNum, char **& newList, int & newNum);
 void DisplayMissingList(char ** recList, int recNum, char ** panList, int panNum);
 void ShoppingList(char ** recList, int recNum, char ** panList, int panNum);
 
 
 /******************************************************
+* Lab/Assignment: PE 12.20.4
 *
+* Overview:
+*	Allow user to add, remove, edit, and search for ingredients in pantry.txt.
+*	Allow the user to input a recipe file with the ingredients surrounded by '<>'s.
+*	Allow the user to display all recipe ingredients, display the missing 
+*	ingredients or add the missing ingredients to 'shoppingList.txt' if they are 
+*	not already there
 *
-*
+* Input:
+*	Keyboard.
+*	Files: 
+*		Gets ingredients from: (newline delimited)
+*			"pantry.txt"
+*			"shoppingList.txt"
+*		Gets ingredients surrounded by <>'s, from user inputted files.
+*	
+* Output:
+*	Screen.
+*	Files:
+*		Output Ingredients from array to: (newline delimited)
+*		"pantry.txt"
+*		"shoppingList.txt"
 ******************************************************/
 int main()
 {
@@ -90,7 +117,7 @@ int main()
 			system("pause");
 			break;
 		case 7:
-			Recipe(ingList, numIng);
+			RecipeMenuSelect(ingList, numIng);
 			break;
 		}
 	}
@@ -152,7 +179,8 @@ int Menu()
 *
 * Precondition: All arguments must exist and be valid.
 *
-* Postcondition: User entered name is passed to FindIng() and the result is displayed in a human understandable form.
+* Postcondition: User entered name is passed to FindIng() and the result is
+* displayed in a human understandable form.
 ******************************************************/
 void SearchIngredient(char ** ingList, int numIng)
 {
@@ -222,8 +250,8 @@ int FindIng(char ** ingList, int numIng, char * findIng)
 *
 * Precondition: All arguments must exist and be valid.
 *
-* Postcondition: nIng is added to ingList in alphabetical order, numIng increased by one.
-*
+* Postcondition: nIng is added to ingList in alphabetical order, numIng increased 
+* by one.
 ******************************************************/
 bool AddIng(char **& ingList, int & numIng, char * nIng)
 {
@@ -265,6 +293,7 @@ bool AddIng(char **& ingList, int & numIng, char * nIng)
 	}
 	else
 	{
+		delete[] temp;
 		cout << "Ingredient already present\n";
 		good = false;
 	}
@@ -276,8 +305,9 @@ bool AddIng(char **& ingList, int & numIng, char * nIng)
 *
 * Precondition: All arguments must exist and be valid.
 *
-* Postcondition: If dIng exists in ingList, it is removed, numIng is decrememted, and returns true.
-* If it is not found, prints appropriate message to display, and returns false.
+* Postcondition: If dIng exists in ingList, it is removed, numIng is decrememted,
+* and returns true. If it is not found, prints appropriate message to display, and
+* returns false.
 ******************************************************/
 bool RemoveIng(char **& ingList, int & numIng, int index)
 {
@@ -327,13 +357,14 @@ bool RemoveIng(char **& ingList, int & numIng, int index)
 }
 
 /******************************************************
-* Purpose: Change a single element of ingList from existingIng to newIng
+* Purpose: Change a single element of ingList from oldIng to newIng
 *
 * Precondition: All arguments must exist and be valid.
 *
 * Postcondition: existinIng is removed from ingList and newIng takes its place.
+*	Inputted string is placed to insure updated alphabetical sorting.
 ******************************************************/
-void EditIng(char **& ingList, int & numIng, int index, char * oldIng, char * newIng)
+void EditIng(char **& ingList, int & numIng, int index, char * newIng)
 {
 	if (index >= numIng || index < 0)
 	{
@@ -354,8 +385,6 @@ void EditIng(char **& ingList, int & numIng, int index, char * oldIng, char * ne
 		}
 		ingList[index] = new char[strlen(newIng) + 1];
 		strcpy(ingList[index], newIng);
-//		RemoveIng(ingList, numIng, oldIng);
-//		AddIng(ingList, numIng, newIng);
 	}
 }
 
@@ -364,7 +393,8 @@ void EditIng(char **& ingList, int & numIng, int index, char * oldIng, char * ne
 *
 * Precondition: All arguments must exist and be valid.
 *
-* Postcondition: filename is overwritten wth the contents of ingList, newline deliminated.
+* Postcondition: filename is overwritten wth the contents of ingList, newline
+* delimited.
 ******************************************************/
 void SaveListToFile(char ** ingList, int numIng, const char * filename)
 {
@@ -404,11 +434,13 @@ void DisplayList(char ** ingList, int numIng)
 }
 
 /******************************************************
-* Purpose: To deallocate and release all dynamic memory and set everything back to 0 or nullptr.
+* Purpose: To deallocate and release all dynamic memory and set everything back to 0
+* or nullptr.
 *
 * Precondition: All arguments must exist and be valid.
 *
-* Postcondition: All memory pointed to by ingList is released. ingList is nulled. numIng set to 0.
+* Postcondition: All memory pointed to by ingList is released. ingList is nulled. 
+* numIng set to 0.
 ******************************************************/
 void PurgeMem(char **& ingList, int & numIng)
 {
@@ -470,9 +502,11 @@ void RemoveIngredient(char **& ingList, int & numIng)
 }
 
 /******************************************************
+* Purpose: User friendly wrapper for EditIng
 *
+* Precondition: All arguments must exist and be valid.
 *
-*
+* Postcondition: Selected item is changed to user entered string.
 ******************************************************/
 void EditIngredient(char **& ingList, int & numIng)
 {
@@ -494,18 +528,18 @@ void EditIngredient(char **& ingList, int & numIng)
 	cin.ignore(cin.rdbuf()->in_avail());
 	
 	cout << ingList[choice];
-	EditIng(ingList, numIng, choice, ingList[choice] , buffer);
+	EditIng(ingList, numIng, choice, buffer);
 	cout << " changed to " << ingList[choice] << endl;
 }
 
 /******************************************************
-* Purpose:
+* Purpose: Framwork Function that allows recipe menu to work.
 *
-* Precondition:
+* Precondition: All arguments must exist and be valid.
 *
-* Postcondition:
+* Postcondition: Shopping list might be altered if user chose to.
 ******************************************************/
-void Recipe(char ** panList, int panNum)
+void RecipeMenuSelect(char ** panList, int panNum)
 {
 	char ** recList = nullptr;
 	int recNum = 0;
@@ -560,11 +594,12 @@ int RecipeMenu()
 }
 
 /******************************************************
-* Purpose:
+* Purpose: To load a recipe file to dynamic array.
 *
-* Precondition:
+* Precondition: All arguments must exist and be valid.
 *
-* Postcondition:
+* Postcondition: Everything between <>'s will be added to passed array.
+* One item per <> set.
 ******************************************************/
 void OpenRecipeFile(char **& ingList, int & numIngs)
 {
@@ -629,14 +664,18 @@ void OpenRecipeFile(char **& ingList, int & numIngs)
 }
 
 /******************************************************
-* Purpose: Compare sourceList and searchList, place any items that are in searchList but not in sourceList into newList
+* Purpose: Compare sourceList and searchList, place any items that are in searchList
+* but not in sourceList into newList
 *
 * Precondition: sourceList and searchList must be sorted alphabetically.
-*				sourceNum and searchNum must equal the number of values in their respective lists.
+*			- sourceNum and searchNum must equal the number of values in their
+*				respective lists.
 *
-* Postcondition: all items that are in searchList but not in sourceList are now in newList.
+* Postcondition: all items that are in searchList but not in sourceList are now in
+* newList.
 ******************************************************/
-void FindMissing(char ** sourceList, int sourceNum, char ** searchList, int searchNum, char **& newList, int & newNum)
+void FindMissing(char ** sourceList, int sourceNum, char ** searchList, int searchNum,
+					char **& newList, int & newNum)
 {
 	for (int ii = 0; ii < searchNum; ii++)
 	{
@@ -648,11 +687,11 @@ void FindMissing(char ** sourceList, int sourceNum, char ** searchList, int sear
 }
 
 /******************************************************
-* Purpose:
+* Purpose: Display to screen all missing recipe ingredients.
 *
-* Precondition:
+* Precondition: All arguments must exist and be valid.
 *
-* Postcondition:
+* Postcondition: All missing recipe ingredients are displayed to screen.
 ******************************************************/
 void DisplayMissingList(char ** recList, int recNum, char ** panList, int panNum)
 {
@@ -665,11 +704,13 @@ void DisplayMissingList(char ** recList, int recNum, char ** panList, int panNum
 }
 
 /******************************************************
-* Purpose:
+* Purpose: To add all missing recipe ingredents to 'shoppingList.txt'.
+*		Additionally will check to insure that each ingredient is only added once.
 *
-* Precondition:
+* Precondition: All arguments must exist and be valid.
 *
-* Postcondition:
+* Postcondition: shoppingList.txt is modified to include any missing ingredients
+*	it did not previously contain.
 ******************************************************/
 void ShoppingList(char ** recList, int recNum, char ** panList, int panNum)
 {
