@@ -25,7 +25,6 @@ using std::endl;
 #include <crtdbg.h>
 
 #include "Deck.h"
-#include "Hand.h"
 
 int Menu();
 
@@ -35,9 +34,7 @@ int main()
 
 	bool done = false;
 	Deck * deck = nullptr;
-	unsigned __int8 input = 0;
-	unsigned __int8 numPlayers = 0;
-	Hand ** player = nullptr;
+	unsigned __int8 input = 0;	
 
 	while (!done)
 	{
@@ -47,13 +44,6 @@ int main()
 			cout << "How many cards do you want in your deck?";
 			cin >> input;
 			deck = new Deck(input);
-			cout << "How many players are playing?";
-			cin >> numPlayers;
-			player = new Hand*[numPlayers];
-			for (__int8 ii = 0; ii < numPlayers; ii++)
-			{
-				player[ii] = new Hand;
-			}
 			break;
 		case 2:
 			if (deck != nullptr)
@@ -71,19 +61,16 @@ int main()
 				cout << "There is no deck to shuffle.\n";
 			break;
 		case 4:
-
+			Card * currentCard = deck->Deal();
+			cout << "Your Corrent Card is: ";
+			currentCard->DisplayCard();
+			currentCard->Return();
+			currentCard = nullptr;
+			cout << "Card Returned to Deck" << endl;
 			break;
 		case 0:
 			done = true;
 		case 5:
-			for (__int8 ii = 0; ii < numPlayers; ii++)
-			{
-				delete player[ii];
-				player[ii] = nullptr;
-			}
-			delete[] player;
-			player = nullptr;
-			numPlayers = 0;
 			delete deck;
 			deck = nullptr;
 			cout << "Game deleted.\n";
@@ -99,7 +86,7 @@ int Menu()
 	cout << "1) Get Deck\n"
 		<< "2) Display Deck\n"
 		<< "3) Shuffle Deck\n"
-		<< "4) Deal Hand\n"
+		<< "4) Deal A Card\n"
 		<< "5) Delete Game\n"
 		<< "0) Exit\n";
 	cin >> choice;
