@@ -80,7 +80,7 @@ int main()
 		case 5:
 			delete deck;
 			deck = nullptr;
-			cout << "Game deleted.\n";
+			cout << "Deck deleted.\n";
 			break;
 		}
 	}
@@ -94,7 +94,7 @@ int Menu()
 		<< "2) Display Deck\n"
 		<< "3) Shuffle Deck\n"
 		<< "4) Deal A Card\n"
-		<< "5) Delete Game\n"
+		<< "5) Delete Deck\n"
 		<< "0) Exit\n";
 	cin >> choice;
 	return choice;

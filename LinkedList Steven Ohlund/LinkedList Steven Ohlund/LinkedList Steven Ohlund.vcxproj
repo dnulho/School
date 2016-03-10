@@ -19,9 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{0D8D6D9B-BFE6-4F15-963E-67823C0E280A}</ProjectGuid>
+    <ProjectGuid>{22A8C892-7E94-4184-A172-3D9D9A269440}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>PE15132StevenOhlund</RootNamespace>
+    <RootNamespace>LinkedListStevenOhlund</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -142,15 +142,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Enums.cpp" />
-    <ClCompile Include="Hand.cpp" />
+    <ClCompile Include="LibraryList.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="SongNode.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Card.h" />
-    <ClInclude Include="Deck.h" />
-    <ClInclude Include="Enums.h" />
-    <ClInclude Include="Hand.h" />
+    <ClInclude Include="LibraryList.h" />
+    <ClInclude Include="SongNode.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -6,7 +6,7 @@ using std::endl;
 MyString::MyString()
 	:m_string(nullptr)
 {
-	cout << "MyString Defailt CTOR" << endl;
+	cout << "MyString Default CTOR" << endl;
 }
 
 MyString::MyString(char * string)

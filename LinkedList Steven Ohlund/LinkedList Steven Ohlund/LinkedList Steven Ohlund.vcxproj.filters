@@ -18,24 +18,18 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Enums.cpp">
+    <ClCompile Include="SongNode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Hand.cpp">
+    <ClCompile Include="LibraryList.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Card.h">
+    <ClInclude Include="SongNode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Enums.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Deck.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Hand.h">
+    <ClInclude Include="LibraryList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

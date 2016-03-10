@@ -1,9 +1,10 @@
 #define _CRT_SECURE_NO_WARNINGS
-
+#define CRTDBG_MAP_ALLOC
 #include <iostream>
 using std::cin;
 using std::cout;
 using std::endl;
+#include <crtdbg.h>
 
 #include "MyString.h"
 #include "Person.h"
@@ -20,6 +21,8 @@ void PerConstRefFnt(const Person & const_ref);
 
 int main()
 {
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+
 	MyString str1;
 	cout << endl;
 	MyString str2("hello world");
