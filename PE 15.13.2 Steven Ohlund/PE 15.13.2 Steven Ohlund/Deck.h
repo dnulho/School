@@ -5,8 +5,7 @@
 class Deck
 {
 public:
-	Deck();
-	Deck(int numCards);
+	Deck(int numCards = 52);
 	~Deck();
 	void Shuffle();
 	void DisplayDeck();
