@@ -15,9 +15,13 @@ void LibraryList::Add(string & songTitle, string & artist)
 	SongNode * nn = new SongNode(songTitle, artist);
 	// If the head is null/empty or the new node is going to be added to front
 	if (m_head == nullptr || nn->m_songTitle <= m_head->m_songTitle)
-	{
-		nn->m_next = m_head;
-		m_head = nn;
+	{							// 1 = node before, 2 = new node, 3 = next node
+		nn->m_next = m_head;			// 2 next points to head		
+		if (m_tail == nullptr)		// If tail is empty
+			m_tail = nn;				// tail points to 2
+		else
+			m_head->m_previous = nn;	// 3 previous points to 2
+		m_head = nn;					// head points to 2
 	}
 	else
 	{
@@ -30,14 +34,14 @@ void LibraryList::Add(string & songTitle, string & artist)
 		}
 		// If the song is being added to the end of the list
 		if (travel == nullptr)
-		{							 // 1 = node before, 2 = new node
+		{							 // 1 = node before, 2 = new node, 3 = next node
 			m_tail->m_next = nn;	 // 1 next points to 2
 			nn->m_previous = m_tail; // 2 previous points to 1
 			m_tail = nn;			 // tail points to 2
 		}
 		// If the song is being added in the middle of the list
 		else
-		{								 // 1 = node before, 2 = new node, 3 = next node in list
+		{								 // 1 = node before, 2 = new node, 3 = next node
 			nn->m_previous = travel->m_previous; // 2 previous points to 1
 			travel->m_previous->m_next = nn;	 // 1 next points to 2
 			travel->m_previous = nn;			 // 3 previous points to 2
@@ -59,11 +63,16 @@ void LibraryList::Delete(string songTitle)
 		}
 		// If the song is found
 		if (travel != nullptr)
-		{								 // 1 = node before, 2 = new node, 3 = next node in list
-			travel->m_previous->m_next = travel->m_next;		 // 1 next points to 3
-			if (travel->m_next != nullptr)				 // if 3 exists
-				travel->m_next->m_previous = travel->m_previous; // 3 previous points to 1
-			delete travel;										 // Dealllocate 2
+		{								 // 1 = node before, 2 = current node, 3 = next node in list
+			if (travel->m_previous != nullptr)			// If 1 exists
+				travel->m_previous->m_next = travel->m_next;		// 1 next points to 3
+			else
+				m_head = travel->m_next;							// head points to 3
+			if (travel->m_next != nullptr)				// If 3 exists
+				travel->m_next->m_previous = travel->m_previous;	// 3 previous points to 1
+			else
+				m_tail = travel->m_previous;						// tail points to 1
+			delete travel;											// Dealllocate 2
 		}
 		// If the song is not found do nothing
 	}
@@ -75,9 +84,13 @@ void LibraryList::Purge()
 	while (m_head != nullptr)		// While there are elements in the list
 	{
 		m_head = m_head->m_next;	// Move m_head to the next element
-		delete m_head->m_previous;	// Delete the previous element
+		if (m_head != nullptr)				// if head points to something
+			delete m_head->m_previous;	// Delete the previous element
+		else
+			delete m_tail;
 	}
-}						// At the end of this function, m_head is a nullptr
+	m_tail = nullptr;
+}						// At the end of this function, m_head and m_tail are nullptr
 
 void LibraryList::SaveAll(ostream & output)
 {
@@ -87,6 +100,7 @@ void LibraryList::SaveAll(ostream & output)
 		output << travel->m_songTitle.c_str() << "|" << travel->m_artist.c_str();
 		if (travel->m_next != nullptr)
 			output << "\n";
+		travel = travel->m_next;
 	}
 }
 
