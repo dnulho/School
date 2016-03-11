@@ -1,5 +1,6 @@
 #include <iostream>
 using std::string;
+using std::ostream;
 
 #ifndef SN_H
 #define SN_H
