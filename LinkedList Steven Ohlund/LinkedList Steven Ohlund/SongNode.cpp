@@ -36,10 +36,10 @@ void SongNode::Display() const
 
 void SongNode::DisplaySong() const
 {
-	cout << "Song Title: " << m_songTitle.c_str << endl;
+	cout << "Song Title: " << m_songTitle.c_str() << endl;
 }
 
 void SongNode::DisplayArtist() const
 {
-	cout << "Artist: " << m_artist.c_str << endl;
+	cout << "Artist: " << m_artist.c_str() << endl;
 }

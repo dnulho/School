@@ -13,10 +13,12 @@ public:
 	void Delete(string songTitle);
 	void Purge();
 
+	void SaveAll(ostream & output);
+
 	// Returns nullptr if song not found
-	SongNode * FindSong(string songTitle);
+	const SongNode * FindSong(string songTitle) const;
 	// Returns a dynamic 2d array with a nullptr endpoint
-	SongNode ** FindArtist(string Artist);
+	const SongNode ** FindArtist(string Artist) const;
 
 private:
 	SongNode * m_head;

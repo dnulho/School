@@ -79,7 +79,18 @@ void LibraryList::Purge()
 	}
 }						// At the end of this function, m_head is a nullptr
 
-SongNode * LibraryList::FindSong(string songTitle)
+void LibraryList::SaveAll(ostream & output)
+{
+	SongNode * travel = m_head;
+	while (travel != nullptr)
+	{
+		output << travel->m_songTitle.c_str() << "|" << travel->m_artist.c_str();
+		if (travel->m_next != nullptr)
+			output << "\n";
+	}
+}
+
+const SongNode * LibraryList::FindSong(string songTitle) const
 {
 	SongNode * travel = m_head;
 	// Iterate through the list comparing the passed song title with each elements song title
@@ -91,7 +102,7 @@ SongNode * LibraryList::FindSong(string songTitle)
 }
 
 // Returns a dynamic array with a nullptr endpoint
-SongNode ** LibraryList::FindArtist(string Artist)
+const SongNode ** LibraryList::FindArtist(string Artist) const
 {
 	SongNode * travel = m_head;
 	// songList starts with a single nullptr element
@@ -114,5 +125,5 @@ SongNode ** LibraryList::FindArtist(string Artist)
 		}
 		travel = travel->m_next;
 	}
-	return songList;
+	return (const SongNode**)songList;
 }
