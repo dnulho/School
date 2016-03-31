@@ -5,7 +5,7 @@ using std::endl;
 
 ////// Public //////
 Card::Card(Suit suit, Card_Val value)
-	:m_suit(suit), m_val(value), m_dealt(false)
+	:m_suit(suit), m_val(value), m_dealt(false) // Set the passed values into appropriate elements
 {
 	cout << "Building " << CARD_VAL[m_val] << SUIT[m_suit] << endl;
 }
@@ -15,7 +15,7 @@ Card::~Card()
 	cout << "Deleting " << CARD_VAL[m_val] << SUIT[m_suit] << endl;
 }
 
-int Card::CardValue()
+int Card::CardValue()		// Returnes the card value, with AD = to 1 and KS = to 52
 {
 	int value = static_cast<int>(m_val + 1) + static_cast<int>(m_suit * 13);
 	return value;
@@ -23,7 +23,7 @@ int Card::CardValue()
 
 void Card::DisplayCard() const
 {
-	if (this)
+	if (this) // if object is not nullptr
 		cout << CARD_VAL[m_val] << SUIT[m_suit] << endl;
 	else
 		cout << "Error: Null Card" << endl;
@@ -31,24 +31,25 @@ void Card::DisplayCard() const
 
 Suit Card::GetSuit()
 {
+	if (this)			// Self explanitory
 	return m_suit;
 }
 
 void Card::Deal()
 {
-	if (this)
+	if (this)			// flag setter
 		m_dealt = true;
 }
 
 void Card::Return()
 {
-	if (this)
+	if (this)			// flag setter
 		m_dealt = false;
 }
 
 bool Card::IsDealt()
 {
-	bool rVal = false;
+	bool rVal = false;	// flag getter
 	if (this)
 		rVal = m_dealt;
 	return rVal;

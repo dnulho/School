@@ -85,12 +85,7 @@ int Menu()
 
 	return select;
 }
-/*
-cin.ignore(cin.rdbuf()->in_avail());
-cin.getline(buffer, BUFFSIZE);
-cin.clear();
-cin.ignore(cin.rdbuf()->in_avail());
-*/
+
 void SearchBySong(LibraryList & music) 
 {
 	string input;

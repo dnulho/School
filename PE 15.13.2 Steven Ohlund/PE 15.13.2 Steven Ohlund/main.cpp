@@ -14,6 +14,7 @@ using std::endl;
 #include <crtdbg.h>
 
 #include "Deck.h"
+#include "Card.h"
 
 int Menu();
 
@@ -87,6 +88,7 @@ int main()
 	return 0;
 }
 
+// User Input Menu that drives the main switch option selection
 int Menu()
 {
 	int choice;
