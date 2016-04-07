@@ -82,7 +82,6 @@ int Menu()
 			cout << "Error: Invalid Selection. Please input valid option" << endl;
 		}
 	}
-
 	return select;
 }
 
