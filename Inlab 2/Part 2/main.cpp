@@ -1,15 +1,16 @@
-// PLEASE FIX AND CLEAN THIS UP -- I ALMOST GOT IT DONE ... 
+#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <iomanip>
 #include <string>
+#include <time.h>
 
-//#pragma warning(disable : 4804 34)  
 using namespace std;
 
 struct transaction
 {
 	int amount;
 	string name;
+	time_t date;
 };
 
 int menu();
@@ -80,7 +81,8 @@ int add(transaction **& log, int & count)
 	}
 	temp[count] = new transaction;
 	temp[count]->amount = value;
-	temp[count]->name = strupr(buffer);
+	temp[count]->name = _strupr(buffer);
+	time(&temp[count]->date);
 
 	delete[] log;
 	log = temp;
@@ -92,12 +94,12 @@ void display(transaction ** log, int &count)
 {
 
 	int total = 0;
-	cout << "NAME                               Value" << endl;
+	cout << "NAME                           Value     Last Modified" << endl;
 	if (log)
 	{
 		for (int ii = 0; ii < count; ii++)
 		{
-			cout << setiosflags(ios::left) << setw(34) << log[ii]->name << " " << log[ii]->amount << endl;
+			cout << setiosflags(ios::left) << setw(30) << log[ii]->name << " " << setw(10) << log[ii]->amount << ctime(&log[ii]->date) << endl;
 			total += log[ii]->amount;
 		}
 	}
