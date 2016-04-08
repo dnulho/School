@@ -5,6 +5,7 @@
 
 #include <iostream>
 using std::ostream;
+using std::istream;
 class cString
 {
 public:
@@ -14,11 +15,22 @@ public:
 	cString& operator=(const cString& rhs);
 	~cString();
 
-	// Display functions
-	friend ostream& operator<<(ostream& os,cString& rhs);
+	// I/O functions
+	friend ostream& operator<<(ostream& os, const cString& rhs);
+	friend istream& operator>>(istream& is, cString& rhs);
 
+	// Logic Functions
+	friend bool operator==(const cString& lhs, const cString& rhs);
+	friend bool operator==(const char * lhs, const cString & rhs);
+	friend bool operator==(const cString & lhs, const char* rhs);
 
+	friend bool operator< (const cString& lhs, const cString& rhs);
+	friend bool operator< (const char* lhs, const cString& rhs);
+	friend bool operator< (const cString& lhs, const char* rhs);
 
+	friend bool operator> (const cString& lhs, const cString& rhs);
+	friend bool operator> (const char* lhs, const cString& rhs);
+	friend bool operator> (const cString& lhs, const char* rhs);
 private:
 
 	char * m_string;
