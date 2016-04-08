@@ -19,7 +19,8 @@ class cBook
 
 public:
 	// Ctors and Dtors
-	cBook(string ISBN = "0-000-00000-0", string Author = "Unknown", cDate PubDate = { 0,0,0 }, uint16_t Price = 0, uint16_t Quantity = 0);
+	cBook(string ISBN = "0-000-00000-0", string Author = "Unknown", 
+		cDate PubDate = { 0,0,0 }, uint16_t Price = 0, uint16_t Quantity = 0);
 	~cBook();
 
 	// Modification Functions

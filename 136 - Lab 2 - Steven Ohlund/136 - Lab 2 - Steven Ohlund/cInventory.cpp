@@ -35,7 +35,7 @@ void cInventory::Add(const string& ISBN, const string& Author, const cDate& PubD
 	else
 	{
 		cBook * travel = m_head;
-		// Iterate through the list until the new song title goes before the traveling pointer
+// Iterate through the list until the new song title goes before the traveling pointer
 		// or travel reaches the end of the list
 		while (travel != nullptr && travel->m_ISBN < nn->m_ISBN)
 		{
@@ -50,7 +50,7 @@ void cInventory::Add(const string& ISBN, const string& Author, const cDate& PubD
 		}
 		// If the song is being added in the middle of the list
 		else
-		{								 // 1 = node before, 2 = new node, 3 = next node
+		{							// 1 = node before, 2 = new node, 3 = next node
 			nn->m_previous = travel->m_previous; // 2 previous points to 1
 			travel->m_previous->m_next = nn;	 // 1 next points to 2
 			travel->m_previous = nn;			 // 3 previous points to 2
@@ -73,16 +73,16 @@ void cInventory::Delete(const string& ISBN)
 		}
 		// If the book is found
 		if (travel != nullptr)
-		{								 // 1 = node before, 2 = current node, 3 = next node in list
-			if (travel->m_previous != nullptr)			// If 1 exists
-				travel->m_previous->m_next = travel->m_next;		// 1 next points to 3
+		{					// 1 = node before, 2 = current node, 3 = next node in list
+			if (travel->m_previous != nullptr)				// If 1 exists
+				travel->m_previous->m_next = travel->m_next;	// 1 next points to 3
 			else
-				m_head = travel->m_next;							// head points to 3
+				m_head = travel->m_next;						// head points to 3
 			if (travel->m_next != nullptr)				// If 3 exists
-				travel->m_next->m_previous = travel->m_previous;	// 3 previous points to 1
+				travel->m_next->m_previous = travel->m_previous;// 3 previous points to 1
 			else
-				m_tail = travel->m_previous;						// tail points to 1
-			delete travel;											// Dealllocate 2
+				m_tail = travel->m_previous;					// tail points to 1
+			delete travel;										// Dealllocate 2
 		}
 		// If the book is not found do nothing
 	}
@@ -108,8 +108,9 @@ void cInventory::SaveToFile(ofstream& file)
 	cBook * travel = m_head;
 	while (travel != nullptr)
 	{
-		file << travel->m_ISBN << "|" << travel->m_Author << "|" << travel->m_PubDate << "|" 
-			<< travel->m_Price << "|" << travel->m_Quantity;
+		file << travel->m_ISBN << "|" << travel->m_Author << "|" 
+			<< travel->m_PubDate << "|" << travel->m_Price << "|"
+			<< travel->m_Quantity;
 		if (travel->m_next != nullptr)
 			file << "\n";
 		travel = travel->m_next;
