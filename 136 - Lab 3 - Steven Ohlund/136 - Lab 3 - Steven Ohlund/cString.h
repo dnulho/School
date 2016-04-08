@@ -20,17 +20,17 @@ public:
 	friend istream& operator>>(istream& is, cString& rhs);
 
 	// Logic Functions
-	friend bool operator==(const cString& lhs, const cString& rhs);
+	bool operator==(const cString& rhs) const;
 	friend bool operator==(const char * lhs, const cString & rhs);
-	friend bool operator==(const cString & lhs, const char* rhs);
+	bool operator==(const char* rhs) const;
 
-	friend bool operator< (const cString& lhs, const cString& rhs);
-	friend bool operator< (const char* lhs, const cString& rhs);
-	friend bool operator< (const cString& lhs, const char* rhs);
+	bool operator< (const cString& rhs) const;
+	friend bool operator< (const char * lhs, const cString& rhs);
+	bool operator< (const char* rhs) const;
 
-	friend bool operator> (const cString& lhs, const cString& rhs);
-	friend bool operator> (const char* lhs, const cString& rhs);
-	friend bool operator> (const cString& lhs, const char* rhs);
+	bool operator> (const cString& rhs) const;
+	friend bool operator> (const char * lhs, const cString& rhs);
+	bool operator> (const char* rhs) const;
 private:
 
 	char * m_string;

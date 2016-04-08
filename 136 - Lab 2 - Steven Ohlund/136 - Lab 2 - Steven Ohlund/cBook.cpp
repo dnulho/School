@@ -79,10 +79,10 @@ void cBook::DisplayQuantity() const
 // Display all of the data contained in an object
 void cBook::DisplayAll() const
 {
-	cout << "ISBN: " << m_ISBN << " Author: " << m_Author << " Publish Date: ";
+	cout << "ISBN: " << m_ISBN << "\tAuthor: " << m_Author << "\tPublish Date: ";
 	m_PubDate.DisplayLongDate();
-	cout << "\nCurrent Price: "; DisplayPrice(); 
-	cout << "Current Quantity: " << m_Quantity << std::endl;
+	cout << "\nCurrent Price: "; DisplayDollars(m_Price);
+	cout << "\tCurrent Quantity: " << m_Quantity << endl << endl;;
 }
 
 //display an int as in dollars
@@ -91,7 +91,7 @@ void DisplayDollars(int Cents)
 	int dollars = Cents / 100;
 	int penny = Cents % 100;
 	cout << "$" << dollars << "." ;
-	if (penny)		// no change
+	if (!penny)		// no change
 		cout << "00";
 	else			// yes change
 		cout << penny;

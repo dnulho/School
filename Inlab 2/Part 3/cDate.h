@@ -52,6 +52,4 @@ private:
 	static const char* m_monthNames[12];
 	static const int daysArray[12];
 };
-
-ostream& operator<<(ostream& os, const cDate& obj);
 #endif // !DATE_H

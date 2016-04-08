@@ -23,7 +23,6 @@ int add(transaction **& trans, int & count);
 void display(transaction ** log, int &count);
 void erase(transaction **& log, int& count);
 
-const int MAX = 10;
 
 int main()
 {
@@ -97,7 +96,6 @@ int add(transaction **& log, int & count)
 
 void display(transaction ** log, int &count)
 {
-
 	int total = 0;
 	cout << "NAME                           Value     Last Modified" << endl;
 	if (log)

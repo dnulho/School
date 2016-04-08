@@ -40,9 +40,9 @@ istream & operator>>(istream & is, cString & rhs)
 	return is;
 }
 
-bool operator==(const cString & lhs,const cString & rhs)
+bool cString::operator==(const cString & rhs) const
 {
-	return !strcmp(lhs.m_string,rhs.m_string);
+	return !strcmp(this->m_string,rhs.m_string);
 }
 
 bool operator==(const char * lhs, const cString & rhs)
@@ -50,14 +50,14 @@ bool operator==(const char * lhs, const cString & rhs)
 	return !strcmp(lhs, rhs.m_string);
 }
 
-bool operator==(const cString & lhs, const char* rhs)
+bool cString::operator==(const char* rhs) const
 {
-	return !strcmp(lhs.m_string, rhs);
+	return !strcmp(this->m_string, rhs);
 }
 
-bool operator<(const cString & lhs, const cString & rhs)
+bool cString::operator<(const cString & rhs) const
 {
-	return (_stricmp(lhs.m_string, rhs.m_string) < 0);
+	return (_stricmp(this->m_string, rhs.m_string) < 0);
 }
 
 bool operator<(const char * lhs, const cString & rhs)
@@ -65,14 +65,14 @@ bool operator<(const char * lhs, const cString & rhs)
 	return (_stricmp(lhs, rhs.m_string) < 0);
 }
 
-bool operator<(const cString & lhs, const char * rhs)
+bool cString::operator<(const char * rhs) const
 {
-	return (_stricmp(lhs.m_string, rhs) < 0);
+	return (_stricmp(this->m_string, rhs) < 0);
 }
 
-bool operator>(const cString & lhs, const cString & rhs)
+bool cString::operator>(const cString & rhs) const
 {
-	return (_stricmp(lhs.m_string, rhs.m_string) > 0);
+	return (_stricmp(this->m_string, rhs.m_string) > 0);
 }
 
 bool operator>(const char * lhs, const cString & rhs)
@@ -80,7 +80,7 @@ bool operator>(const char * lhs, const cString & rhs)
 	return (_stricmp(lhs, rhs.m_string) > 0);
 }
 
-bool operator>(const cString & lhs, const char * rhs)
+bool cString::operator>(const char * rhs) const
 {
-	return (_stricmp(lhs.m_string, rhs) > 0);
+	return (_stricmp(this->m_string, rhs) > 0);
 }

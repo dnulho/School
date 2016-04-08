@@ -14,7 +14,6 @@ int main()
 		today.Display();
 	}
 	cout << "\nEnd of First Part " << endl;
-	today.~cDate();
 	today.SetMonth(6);
 	for (int i(0); i < 16; i++)
 	{
